@@ -1,10 +1,12 @@
 source("functions_parse_gtf.R")
 
-#load a gtf, convert to GRanges, isolate TSS, extend symetrically
+#load a gtf, convert to GRanges, isolate TSS, extend symetrically, write as bed file
 gene_df = parse_gtf("examples_data/tiny.gtf")
 gene_gr = gtf.df2gr(ref_df = gene_df)
 gene_gr_tss = gtf.to_tss(gene_gr)
 gene_gr_tss2kb = gtf.extend(ref_gr = gene_gr_tss, ext = 1000)
+gtf.write_bed(ref_gr = gene_gr_tss2kb, bed_file = "examples_data/tiny_tss2kb.bed")
+
 
 #the equivalent with magrittr
 require(magrittr)

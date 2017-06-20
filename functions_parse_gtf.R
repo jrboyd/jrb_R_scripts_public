@@ -126,3 +126,15 @@ gtf.extend_direction = function(ref_gr, ext, apply_upstream = T){
   return(ref_gr)
 }
   
+#write a loaded gtf to bed
+gtf.write_bed = function(ref_gr, bed_file, convert_index_1_to_0 = T){
+  #convert to GRange if necessary
+  if(is.data.frame(ref_gr)) ref_gr = gtf.df2gr(ref_gr)
+  mat = cbind(as.character(seqnames(ref_gr)), 
+              start(ref_gr), 
+              end(ref_gr), 
+              names(ref_gr), 
+              rep(0, length(ref_gr)), 
+              as.character(strand(ref_gr)))
+  write.table(mat, file = bed_file, sep = "\t", col.names = F, row.names = F, quote = F)
+}
